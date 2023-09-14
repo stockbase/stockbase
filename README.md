@@ -1,15 +1,31 @@
-# Turborepo kitchen sink starter
+# Stockbase
 
-This is an official starter Turborepo with multiple meta-frameworks all working in harmony and sharing packages.
+## Getting Started
 
-This example also shows how to use [Workspace Configurations](https://turbo.build/repo/docs/core-concepts/monorepos/configuring-workspaces).
+```
+nvm install <LATEST_NODE_VERSION>
+npm install turbo --global
+npm install -g pnpm
+```
 
-## Using this example
+After you've cloned this repo, `cd` into the root directory and run the following:
 
-Run the following command:
+```
+pnpm install
 
-```sh
-npx create-turbo@latest -e kitchen-sink
+turbo dev # or pnpm run dev
+```
+
+`turbo dev` will run every app in the monorepo. To run a single app, run the following:
+
+```
+turbo dev --filter <APP_NAME>
+```
+
+## Adding Packages
+
+```
+pnpm add <package> --filter <APP_NAME>
 ```
 
 ## What's inside?
@@ -19,7 +35,7 @@ This Turborepo includes the following packages and apps:
 ### Apps and Packages
 
 - `api`: an [Express](https://expressjs.com/) server
-- `storefront`: a [Next.js](https://nextjs.org/) app
+- `web`: a [Next.js](https://nextjs.org/) app
 - `admin`: a [Vite](https://vitejs.dev/) single page app
 - `blog`: a [Remix](https://remix.run/) blog
 - `logger`: isomorphic logger (a small wrapper around console.log)
