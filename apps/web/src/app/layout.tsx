@@ -3,6 +3,8 @@ import Script from "next/script";
 import { Providers } from "./providers";
 import Footer from "./footer";
 import Navbar from "./navbar";
+import StockTickersBar from "./stock-tickers-bar";
+
 
 export default function RootLayout({
   children,
@@ -17,6 +19,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <Navbar />
+          <StockTickersBar />
           {children}
           <Footer />
         </Providers>

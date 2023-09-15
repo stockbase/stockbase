@@ -1,20 +1,19 @@
 import { log } from "logger";
-import { CounterButton, Link } from "ui";
 
 export const metadata = {
-  title: "Store | Kitchen Sink",
+  title: "Stockbase",
 };
 
-export default function Store(): JSX.Element {
-  log("Hey! This is the Store page.");
+export default function Home(): JSX.Element {
+  log("Hey! This is the Stockbase homepage.");
 
   return (
     <div className="container">
-      <h1 className="title">
+      {/* <h1 className="title">
         Stockbase <br />
         <span>Kitchen Sink</span>
-      </h1>
-      <CounterButton />
+      </h1> */}
+      {/* <CounterButton />
       <p className="description">
         Built With{" "}
         <Link href="https://turbo.build/repo" newTab>
@@ -24,7 +23,7 @@ export default function Store(): JSX.Element {
         <Link href="https://nextjs.org/" newTab>
           Next.js
         </Link>
-      </p>
+      </p> */}
     </div>
   );
 }

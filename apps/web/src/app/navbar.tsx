@@ -59,7 +59,7 @@ export default function Navbar() {
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
           >
-            <b>StockBase</b>
+            <b>Stockbase</b>
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
@@ -88,10 +88,10 @@ export default function Navbar() {
             fontSize={"sm"}
             fontWeight={600}
             color={"white"}
-            bg={"pink.400"}
+            bg={"green.400"}
             href={"#"}
             _hover={{
-              bg: "pink.300",
+              bg: "green.300",
             }}
           >
             Sign Up
