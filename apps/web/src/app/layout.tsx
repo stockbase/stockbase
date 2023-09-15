@@ -1,4 +1,8 @@
 import "./styles.css";
+import Script from "next/script";
+import { Providers } from "./providers";
+import Footer from "./footer";
+import Navbar from "./navbar";
 
 export default function RootLayout({
   children,
@@ -7,7 +11,16 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <head>
+        <Script src="https://s3.tradingview.com/tv.js"></Script>
+      </head>
+      <body>
+        <Providers>
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
+      </body>
     </html>
   );
 }
