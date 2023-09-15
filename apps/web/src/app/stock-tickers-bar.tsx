@@ -60,6 +60,10 @@ export default function StockTickersBar() {
       "title": "AAPL"
     },
     {
+      "proName": "NASDAQ:GOOG",
+      "title": "GOOG"
+    },
+    {
       "proName": "NASDAQ:TSLA",
       "title": "TSLA"
     },
@@ -73,7 +77,8 @@ export default function StockTickersBar() {
     // TODO: largeChartUrl should redirect to our stock page URL based on environment
     // by default, it goes to ?tvwidgetsymbol=FX_IDC%3AEURUSD, so we will need to redirect the request to our stock page
     <div>
-      <TickerTapeNoSSR symbols={tickers} colorTheme="light" displayMode="regular" copyrightStyles={tradingViewCopyRightStyles} largeChartUrl={`http://localhost/stocks`} />
+      {/* You can't configure `largeChartUrl` per symbol. We had to configure some routing rules in next.config.js to redirect clicks to the appropriate stock page on our site. */}
+      <TickerTapeNoSSR symbols={tickers} colorTheme="light" displayMode="regular" copyrightStyles={tradingViewCopyRightStyles} largeChartUrl={`http://localhost:3002/stocks/redirect`} />
       <div style={{ clear:"both"}}></div>
     </div>
   )
