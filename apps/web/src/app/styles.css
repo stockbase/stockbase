@@ -13,6 +13,19 @@ body {
   margin: 0;
 }
 
+main {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: space-between; */
+  /* align-items: center; */
+  /* padding: 2rem; */
+  /* padding: 1em 6em 1em; */
+  /* TODO: for smaller displays view, less padding */
+  padding-left: 12em;
+  padding-right: 12em;
+  min-height: 100vh;
+}
+
 .container {
   min-height: 100vh;
   display: flex;
@@ -45,11 +58,11 @@ body {
   font-weight: 500;
 }
 
-.description a {
-  color: #3b82f6;
+/* a {
+  color: #717171 !important;
   text-decoration: none;
-}
+} */
 
-.description a:hover {
+/* .description a:hover {
   text-decoration: underline;
-}
+} */

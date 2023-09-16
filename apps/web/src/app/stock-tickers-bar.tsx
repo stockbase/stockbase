@@ -1,5 +1,6 @@
 "use client";
 
+import { useColorMode } from "@chakra-ui/react";
 // import { CopyrightStyles } from "react-ts-tradingview-widgets";
 import dynamic from "next/dynamic";
 
@@ -7,7 +8,7 @@ interface CopyrightStyles {
   parent?: React.CSSProperties;
   link?: React.CSSProperties;
   span?: React.CSSProperties;
-};
+}
 
 const TickerTapeNoSSR = dynamic(
   () => import("react-ts-tradingview-widgets").then((w) => w.TickerTape),
@@ -17,11 +18,13 @@ const TickerTapeNoSSR = dynamic(
 );
 
 export default function StockTickersBar() {
+  const { colorMode } = useColorMode();
   const tradingViewCopyRightStyles: CopyrightStyles = {
     // Styles for the parent element wrapping the copyright text
     parent: {
       float: "right",
-      marginRight: "5px"
+      marginRight: "5px",
+      // display: "none" // TODO: Contact TradingView to remove branding
     },
     // Styles for the link
     link: {
@@ -34,38 +37,38 @@ export default function StockTickersBar() {
     },
   };
 
-  // TODO: 
+  // TODO:
   const markets = [
     {
-      "proName": "FOREXCOM:SPXUSD",
-      "title": "S&P 500"
+      proName: "FOREXCOM:SPXUSD",
+      title: "S&P 500",
     },
     {
-      "proName": "FOREXCOM:NSXUSD",
-      "title": "Nasdaq 100"
+      proName: "FOREXCOM:NSXUSD",
+      title: "Nasdaq 100",
     },
     {
-      "proName": "FX_IDC:EURUSD",
-      "title": "EUR/USD"
+      proName: "FX_IDC:EURUSD",
+      title: "EUR/USD",
     },
   ];
 
   const defaultStocks = [
     {
-      "proName": "NASDAQ:MSFT",
-      "title": "MSFT"
+      proName: "NASDAQ:MSFT",
+      title: "MSFT",
     },
     {
-      "proName": "NASDAQ:AAPL",
-      "title": "AAPL"
+      proName: "NASDAQ:AAPL",
+      title: "AAPL",
     },
     {
-      "proName": "NASDAQ:GOOG",
-      "title": "GOOG"
+      proName: "NASDAQ:GOOG",
+      title: "GOOG",
     },
     {
-      "proName": "NASDAQ:TSLA",
-      "title": "TSLA"
+      proName: "NASDAQ:TSLA",
+      title: "TSLA",
     },
   ];
 
@@ -78,8 +81,14 @@ export default function StockTickersBar() {
     // by default, it goes to ?tvwidgetsymbol=FX_IDC%3AEURUSD, so we will need to redirect the request to our stock page
     <div>
       {/* You can't configure `largeChartUrl` per symbol. We had to configure some routing rules in next.config.js to redirect clicks to the appropriate stock page on our site. */}
-      <TickerTapeNoSSR symbols={tickers} colorTheme="light" displayMode="regular" copyrightStyles={tradingViewCopyRightStyles} largeChartUrl={`http://localhost:3002/stocks/redirect`} />
-      <div style={{ clear:"both"}}></div>
+      <TickerTapeNoSSR
+        symbols={tickers}
+        colorTheme={colorMode === "light" ? "light" : "dark"}
+        displayMode="regular"
+        copyrightStyles={tradingViewCopyRightStyles}
+        largeChartUrl={`http://localhost:3002/stocks/redirect`}
+      />
+      <div style={{ clear: "both" }}></div>
     </div>
-  )
+  );
 }
