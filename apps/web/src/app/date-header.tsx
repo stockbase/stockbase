@@ -2,7 +2,7 @@
 
 import { Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { FaMoon } from "react-icons/fa";
+// import { FaMoon } from "react-icons/fa";
 // import { FiMoon } from "react-icons/fi";
 
 export default function DateHeader() {
@@ -30,7 +30,8 @@ export default function DateHeader() {
           minute: "numeric",
           hour12: true,
         })}{" "}
-        - Market Open <FaMoon />
+        - Market Open
+        {/* <FiMoon /> */}
       </Text>
     </>
   );

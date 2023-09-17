@@ -15,9 +15,12 @@ import {
   Avatar,
   Box,
   Select,
+  Flex,
+  Spacer,
 } from "@chakra-ui/react";
 import { faker } from "@faker-js/faker";
 import Link from "next/link";
+import { FiUser } from "react-icons/fi";
 
 export default function TopUsers(): JSX.Element {
   const fakeUsers = [
@@ -55,9 +58,24 @@ export default function TopUsers(): JSX.Element {
   return (
     <Card>
       <CardHeader>
-        <Heading size="md">Top Users</Heading>
+        {/* <Heading size="sm">Top Users</Heading> */}
+        <Flex>
+          <Box>
+            <Heading size="sm">Top Users</Heading>
+          </Box>
+          <Spacer />
+          <Box>
+            <FiUser />
+            {/* <IconButton
+              variant="ghost"
+              colorScheme="gray"
+              aria-label="See menu"
+              icon={<FiUser />}
+            /> */}
+          </Box>
+        </Flex>
       </CardHeader>
-      <Select placeholder="Select option" m={3} size="sm" width={"50%"}>
+      <Select placeholder="Largest Portfolio" m={2} size="sm" width={"50%"}>
         <option value="option1">Option 1</option>
         <option value="option2">Option 2</option>
         <option value="option3">Option 3</option>
