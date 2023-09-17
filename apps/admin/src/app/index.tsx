@@ -9,22 +9,6 @@ function App(): JSX.Element {
       <ChakraProvider>
         <SidebarWithHeader />
       </ChakraProvider>
-      {/* <div className="container">
-        <h1 className="title">
-          Admin <br />
-        </h1>
-        <CounterButton />
-        <p className="description">
-          Built With{" "}
-          <Link href="https://turbo.build/repo" newTab>
-            Turborepo
-          </Link>
-          {" & "}
-          <Link href="https://vitejs.dev/" newTab>
-            Vite
-          </Link>
-        </p>
-      </div> */}
     </>
   );
 }

@@ -70,6 +70,50 @@ export default function StockTickersBar() {
       proName: "NASDAQ:TSLA",
       title: "TSLA",
     },
+    {
+      proName: "NASDAQ:NVDA",
+      title: "NVDA",
+    },
+    {
+      proName: "NASDAQ:NFLX",
+      title: "NFLX",
+    },
+    {
+      proName: "NASDAQ:META",
+      title: "META",
+    },
+    {
+      proName: "NYSE:DIS",
+      title: "DIS",
+    },
+    {
+      proName: "NASDAQ:ADBE",
+      title: "ADBE",
+    },
+    {
+      proName: "NYSE:JPM",
+      title: "JPM",
+    },
+    {
+      proName: "NYSE:GME",
+      title: "GME",
+    },
+    {
+      proName: "NYSE:JNJ",
+      title: "JNJ",
+    },
+    {
+      proName: "NYSE:MA",
+      title: "MA",
+    },
+    {
+      proName: "NYSE:AMC",
+      title: "AMC",
+    },
+    {
+      proName: "NYSE:V",
+      title: "V",
+    },
   ];
 
   // TODO: Get trending stocks, and replace defaultStocks if there are at least 10 trending stocks for the day

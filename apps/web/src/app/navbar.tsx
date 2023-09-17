@@ -15,6 +15,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Tag,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
@@ -61,6 +62,14 @@ export default function Navbar() {
           >
             <b>Stockbase</b>
           </Text>
+          <Tag
+            size={"sm"}
+            bg={useColorModeValue("green.300", "green.800")}
+            ml={2}
+            color={"white"}
+          >
+            BETA
+          </Tag>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             <DesktopNav />
@@ -249,12 +258,11 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           borderColor={useColorModeValue("gray.200", "gray.700")}
           align={"start"}
         >
-          {
-            children?.map((child) => (
-              <Box as="a" key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Box>
-            ))}
+          {children?.map((child) => (
+            <Box as="a" key={child.label} py={2} href={child.href}>
+              {child.label}
+            </Box>
+          ))}
         </Stack>
       </Collapse>
     </Stack>

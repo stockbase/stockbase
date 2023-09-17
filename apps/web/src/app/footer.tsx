@@ -53,7 +53,7 @@ export default function Footer() {
               <Logo />
             </Box>
             <Text fontSize={"sm"}>
-              © { new Date().getFullYear() } Stockbase. All rights reserved
+              © {new Date().getFullYear()} Stockbase. All rights reserved
             </Text>
           </Stack>
           <Stack align={"flex-start"}>
