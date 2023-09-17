@@ -17,37 +17,38 @@ import {
   Select,
 } from "@chakra-ui/react";
 import { Link } from "ui";
+import { faker } from "@faker-js/faker";
 
 export default function TopUsers(): JSX.Element {
   const fakeUsers = [
     {
       rank: 1,
-      username: "warrenfreakingbuffet",
-      profilePictureUrl: "https://placekitten.com/120/120",
+      username: faker.internet.userName(),
+      profilePictureUrl: faker.internet.avatar(),
       portfolioBalanceSnapshot: 1534532.45,
     },
     {
       rank: 2,
-      username: "JohnnyBogleHead",
-      profilePictureUrl: "https://placekitten.com/120/120",
+      username: faker.internet.userName(),
+      profilePictureUrl: faker.internet.avatar(),
       portfolioBalanceSnapshot: 1434540.93,
     },
     {
       rank: 3,
-      username: "bennygraham",
-      profilePictureUrl: "https://placekitten.com/120/120",
+      username: faker.internet.userName(),
+      profilePictureUrl: faker.internet.avatar(),
       portfolioBalanceSnapshot: 904510.34,
     },
     {
       rank: 4,
-      username: "harrypotter",
-      profilePictureUrl: "https://placekitten.com/120/120",
+      username: faker.internet.userName(),
+      profilePictureUrl: faker.internet.avatar(),
       portfolioBalanceSnapshot: 804510.34,
     },
     {
       rank: 5,
-      username: "lebronjames",
-      profilePictureUrl: "https://placekitten.com/120/120",
+      username: faker.internet.userName(),
+      profilePictureUrl: faker.internet.avatar(),
       portfolioBalanceSnapshot: 704510.34,
     },
   ];
