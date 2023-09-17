@@ -11,7 +11,6 @@ import {
   Grid,
   GridItem,
   Heading,
-  Link,
   Table,
   TableCaption,
   TableContainer,
@@ -25,6 +24,7 @@ import {
 import { log } from "logger";
 import DateHeader from "./date-header";
 import TopUsers from "./top-users";
+import Link from "next/link";
 
 export const metadata = {
   title: "Stockbase",

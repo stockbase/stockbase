@@ -16,8 +16,8 @@ import {
   Box,
   Select,
 } from "@chakra-ui/react";
-import { Link } from "ui";
 import { faker } from "@faker-js/faker";
+import Link from "next/link";
 
 export default function TopUsers(): JSX.Element {
   const fakeUsers = [
