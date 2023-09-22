@@ -16,21 +16,30 @@ import {
   useBreakpointValue,
   useDisclosure,
   Tag,
+  useColorMode,
 } from "@chakra-ui/react";
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  // PhoneIcon,
+  // SearchIcon,
 } from "@chakra-ui/icons";
+import { BsSun, BsMoonStarsFill } from "react-icons/bs";
+// import Link from "next/link";
+// import { useRouter } from "next/router";
 
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Box>
       <Flex
         bg={useColorModeValue("white", "gray.800")}
+        // bg={useColorModeValue("white", "gray.900")}
+        // bg={useColorModeValue("white", "black")}
         color={useColorModeValue("gray.600", "white")}
         minH={"60px"}
         py={{ base: 2 }}
@@ -82,6 +91,20 @@ export default function Navbar() {
           direction={"row"}
           spacing={6}
         >
+          {/* <InputGroup display={{ base: "none", md: "inline-flex" }}>
+            <InputRightElement pointerEvents="none">
+              <SearchIcon color="gray.300" />
+            </InputRightElement>
+            <Input placeholder="Search" />
+          </InputGroup> */}
+          <Button
+            aria-label="Toggle Color Mode"
+            onClick={toggleColorMode}
+            _focus={{ boxShadow: "none" }}
+            w="fit-content"
+          >
+            {colorMode === "light" ? <BsSun /> : <BsMoonStarsFill />}
+          </Button>
           <Button
             as={"a"}
             fontSize={"sm"}
@@ -119,6 +142,7 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
+  // const router = useRouter();
 
   return (
     <Stack direction={"row"} spacing={4}>
@@ -130,6 +154,7 @@ const DesktopNav = () => {
                 as="a"
                 p={2}
                 href={navItem.href ?? "#"}
+                cursor={"pointer"}
                 fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
@@ -138,7 +163,12 @@ const DesktopNav = () => {
                   color: linkHoverColor,
                 }}
               >
+                {/* <Link href={navItem.href ?? "#"}> */}
+                {/* {navItem.label} */}
+                {/* <a className={router.pathname == "/" ? "active" : ""}> */}
                 {navItem.label}
+                {/* </a> */}
+                {/* </Link> */}
               </Box>
             </PopoverTrigger>
 
@@ -282,19 +312,24 @@ const NAV_ITEMS: NavItem[] = [
     href: "/",
   },
   {
+    label: "Explore",
+    href: "/",
+    children: [
+      {
+        label: "Stocks",
+        // subLabel: "Find your dream design job",
+        href: "/stocks",
+      },
+      {
+        label: "Users",
+        // subLabel: "An exclusive list for contract work",
+        href: "/users",
+      },
+    ],
+  },
+  {
     label: "About",
-    // children: [
-    //   {
-    //     label: 'Job Board',
-    //     subLabel: 'Find your dream design job',
-    //     href: '#',
-    //   },
-    //   {
-    //     label: 'Freelance Projects',
-    //     subLabel: 'An exclusive list for contract work',
-    //     href: '#',
-    //   },
-    // ],
+    href: "/about",
   },
   {
     label: "Contact",

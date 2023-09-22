@@ -17,8 +17,9 @@ import {
 import { log } from "logger";
 import DateHeader from "./date-header";
 import TopUsers from "./top-users";
-import { FiBook } from "react-icons/fi";
+import { FiActivity } from "react-icons/fi";
 import TrendingStocks from "./top-stocks";
+import { BsNewspaper } from "react-icons/bs";
 
 export const metadata = {
   title: "Stockbase",
@@ -46,13 +47,16 @@ export default function Home(): JSX.Element {
         templateColumns="repeat(6, 1fr)"
         gap={4}
       >
-        <GridItem rowSpan={2} colSpan={3} /*bg="tomato*/>
+        <GridItem rowSpan={2} colSpan={3}>
           <TopUsers />
         </GridItem>
-        <GridItem rowSpan={2} colSpan={3} /* bg="tomato"*/>
+        <GridItem rowSpan={2} colSpan={3}>
           <TrendingStocks />
         </GridItem>
-        <GridItem rowSpan={2} colSpan={6} /*bg="papayawhip"*/>
+        <GridItem rowSpan={2} colSpan={3}>
+          <Activity />
+        </GridItem>
+        <GridItem rowSpan={2} colSpan={3}>
           <News />
         </GridItem>
       </Grid>
@@ -60,9 +64,32 @@ export default function Home(): JSX.Element {
   );
 }
 
+function Activity(): JSX.Element {
+  return (
+    <Card variant="outline">
+      <CardHeader>
+        <Flex>
+          <Box>
+            <Heading size="sm">Activity</Heading>
+          </Box>
+          <Spacer />
+          <Box>
+            <IconButton
+              variant="ghost"
+              colorScheme="gray"
+              aria-label="See menu"
+              icon={<FiActivity />}
+            />
+          </Box>
+        </Flex>
+      </CardHeader>
+    </Card>
+  );
+}
+
 function News(): JSX.Element {
   return (
-    <Card>
+    <Card variant="outline">
       <CardHeader>
         <Flex>
           <Box>
@@ -74,7 +101,7 @@ function News(): JSX.Element {
               variant="ghost"
               colorScheme="gray"
               aria-label="See menu"
-              icon={<FiBook />}
+              icon={<BsNewspaper />}
             />
           </Box>
         </Flex>

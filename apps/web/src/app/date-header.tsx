@@ -1,6 +1,6 @@
 "use client";
 
-import { Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 // import { FaMoon } from "react-icons/fa";
 // import { FiMoon } from "react-icons/fi";
@@ -15,8 +15,8 @@ export default function DateHeader() {
   }, []);
 
   return (
-    <>
-      <Text fontSize="2xl" fontWeight="bold">
+    <Box mb={6}>
+      <Text fontSize="xl" fontWeight="bold">
         {dateState.toLocaleString("en-US", {
           weekday: "long",
           month: "long",
@@ -24,15 +24,15 @@ export default function DateHeader() {
         })}
       </Text>
       {/* TODO: show "Market Open" or "After Hours" depending on time and if current date is a weekend or holiday */}
-      <Text fontSize="sm" fontWeight="bold" mb={6}>
+      {/* <Text fontSize="sm" fontWeight="bold" mb={6}>
         {dateState.toLocaleString("en-US", {
           hour: "numeric",
           minute: "numeric",
           hour12: true,
         })}{" "}
         - Market Open
-        {/* <FiMoon /> */}
-      </Text>
-    </>
+        <FiMoon />
+      </Text> */}
+    </Box>
   );
 }

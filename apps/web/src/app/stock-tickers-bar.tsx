@@ -1,6 +1,6 @@
 "use client";
 
-import { useColorMode } from "@chakra-ui/react";
+import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 // import { CopyrightStyles } from "react-ts-tradingview-widgets";
 import dynamic from "next/dynamic";
 
@@ -32,7 +32,8 @@ export default function StockTickersBar() {
     },
     // Styles for text of the link
     span: {
-      color: "darkblue",
+      // color: "darkblue",
+      color: useColorModeValue("black", "gray.100"),
       fontSize: "10px",
     },
   };
@@ -128,6 +129,7 @@ export default function StockTickersBar() {
       <TickerTapeNoSSR
         symbols={tickers}
         colorTheme={colorMode === "light" ? "light" : "dark"}
+        // isTransparent
         displayMode="regular"
         copyrightStyles={tradingViewCopyRightStyles}
         largeChartUrl={`http://localhost:3002/stocks/redirect`}
