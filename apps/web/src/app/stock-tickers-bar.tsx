@@ -32,13 +32,11 @@ export default function StockTickersBar() {
     },
     // Styles for text of the link
     span: {
-      // color: "darkblue",
       color: useColorModeValue("black", "gray.100"),
       fontSize: "10px",
     },
   };
 
-  // TODO:
   const markets = [
     {
       proName: "FOREXCOM:SPXUSD",

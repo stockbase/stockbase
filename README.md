@@ -2,6 +2,8 @@
 
 ## Getting Started
 
+### Setup
+
 ```
 nvm install <LATEST_NODE_VERSION>
 npm install turbo --global
@@ -12,15 +14,29 @@ After you've cloned this repo, `cd` into the root directory and run the followin
 
 ```
 pnpm install
+```
 
+### Running
+
+```
 turbo dev # or pnpm run dev
 ```
 
 `turbo dev` will run every app in the monorepo. To run a single app, run the following:
 
 ```
-turbo dev --filter <APP_NAME>
+turbo dev --filter <APP_NAME> # See app names below
 ```
+
+Each subproject is stored in the `apps` directory. We have the following apps in this monorepo:
+`web`
+`admin`
+`api`
+`mobile`
+
+Each library is stored in the `packagaes` directory. We have the following libraries
+`ui`
+`logger`
 
 ## Adding Packages
 

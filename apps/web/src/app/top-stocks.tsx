@@ -16,7 +16,6 @@ import {
   Tbody,
   Td,
   Avatar,
-  Tfoot,
   Box,
   Select,
   Badge,
@@ -95,7 +94,12 @@ export default function TrendingStocks(): JSX.Element {
 
   return (
     <Card variant="outline">
-      <CardHeader>
+      <CardHeader
+        bg={"gray.800"}
+        color={"white"}
+        borderTopRightRadius={"var(--card-radius)"}
+        borderTopLeftRadius={"var(--card-radius)"}
+      >
         <Flex>
           <Box>
             <Heading size="sm">Top Stocks</Heading>
@@ -278,47 +282,7 @@ export default function TrendingStocks(): JSX.Element {
                 </Td>
               </Tr>
             ))}
-            {/* <Tr>
-              <Td>1</Td>
-              <Td>
-                <Box display={"flex"} alignItems={"center"}>
-                  <Avatar src="https://bit.ly/sage-adebayo" size="xs" mr={3} />
-                  <div>
-                    <h4>
-                      <b>
-                        <Link href="/stocks/TSLA">TSLA</Link>
-                      </b>
-                    </h4>
-                    <small>Tesla</small>
-                  </div>
-                </Box>
-              </Td>
-              <Td isNumeric>$330.22</Td>
-            </Tr>
-            <Tr>
-              <Td>2</Td>
-              <Td>
-                <h4>
-                  <b>AAPL</b>
-                </h4>
-                <small>Apple</small>
-              </Td>
-              <Td isNumeric>$175.01</Td>
-            </Tr>
-            <Tr>
-              <Td>3</Td>
-              <Td>
-                <h4>
-                  <b>MSFT</b>
-                </h4>
-                <small>Microsoft</small>
-              </Td>
-              <Td isNumeric>$330.22</Td>
-            </Tr> */}
           </Tbody>
-          <Tfoot>
-            {/* Footer could be useful if we need to show Attribution/Copyright info for the Stock API we are using */}
-          </Tfoot>
         </Table>
       </TableContainer>
     </Card>

@@ -17,6 +17,7 @@
     "@chakra-ui/theme-tools": "^2.1.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@splidejs/react-splide": "^0.7.12",
     "framer-motion": "^10.16.4",
     "logger": "workspace:*",
     "moment": "^2.29.4",
@@ -25,6 +26,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-ts-tradingview-widgets": "^1.2.0",
+    "recharts": "^2.8.0",
     "ui": "workspace:*"
   },
   "devDependencies": {

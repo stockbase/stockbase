@@ -70,7 +70,7 @@ export default function About() {
             >
               Our Story
             </Text>
-            <Heading>A digital Product design agency</Heading>
+            <Heading>The Ultimate Investor Social Network</Heading>
             <Text color={"gray.500"} fontSize={"lg"}>
               Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
               nonumy eirmod tempor invidunt ut labore
@@ -93,21 +93,21 @@ export default function About() {
                   />
                 }
                 iconBg={useColorModeValue("yellow.100", "yellow.900")}
-                text={"Business Planning"}
+                text={"Stock Market Analysis"}
               />
               <Feature
                 icon={
                   <Icon as={IoLogoBitcoin} color={"green.500"} w={5} h={5} />
                 }
                 iconBg={useColorModeValue("green.100", "green.900")}
-                text={"Financial Planning"}
+                text={"Social Network"}
               />
               <Feature
                 icon={
                   <Icon as={IoSearchSharp} color={"purple.500"} w={5} h={5} />
                 }
                 iconBg={useColorModeValue("purple.100", "purple.900")}
-                text={"Market Analysis"}
+                text={"Portfolio Insights"}
               />
             </Stack>
           </Stack>

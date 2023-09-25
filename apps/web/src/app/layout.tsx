@@ -4,7 +4,9 @@ import { Providers } from "./providers";
 import Footer from "./footer";
 import Navbar from "./navbar";
 import StockTickersBar from "./stock-tickers-bar";
-import { ColorModeScript, theme } from "@chakra-ui/react";
+// import { ColorModeScript, theme } from "@chakra-ui/react";
+
+import "@splidejs/react-splide/css";
 
 export default function RootLayout({
   children,
@@ -17,7 +19,7 @@ export default function RootLayout({
         <Script src="https://s3.tradingview.com/tv.js"></Script>
       </head>
       <body>
-        <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+        {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
         <Providers>
           <Navbar />
           <StockTickersBar />

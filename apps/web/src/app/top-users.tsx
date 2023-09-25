@@ -73,7 +73,13 @@ export default function TopUsers(): JSX.Element {
   ];
   return (
     <Card variant="outline">
-      <CardHeader>
+      <CardHeader
+        // TODO: use useColorModeValue here
+        bg={"gray.800"}
+        color={"white"}
+        borderTopRightRadius={"var(--card-radius)"}
+        borderTopLeftRadius={"var(--card-radius)"}
+      >
         {/* <Heading size="sm">Top Users</Heading> */}
         <Flex>
           <Box>

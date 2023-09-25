@@ -3,17 +3,17 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: '/stocks/redirect',
+        source: "/stocks/redirect",
         has: [
           {
-            type: 'query',
-            key: 'tvwidgetsymbol',
-            value: '([^&]*):(?<ticker>.*)'
+            type: "query",
+            key: "tvwidgetsymbol",
+            value: "([^&]*):(?<ticker>.*)",
           },
         ],
         permanent: false,
-        destination: '/stocks/:ticker',
+        destination: "/stocks/:ticker",
       },
-    ]
+    ];
   },
 };
