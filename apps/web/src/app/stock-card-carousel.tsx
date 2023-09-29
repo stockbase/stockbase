@@ -1,6 +1,16 @@
 "use client";
 
-import { Stat, StatArrow, StatHelpText, StatNumber } from "@chakra-ui/react";
+import {
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Stat,
+  StatArrow,
+  StatHelpText,
+  StatNumber,
+} from "@chakra-ui/react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 
@@ -16,6 +26,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
+import { Bar } from "recharts";
+import { useEffect } from "react";
+import Link from "next/link";
 
 const StockDailyPriceChart = dynamic(
   () =>
@@ -37,6 +50,11 @@ export default function StockCardCarousel() {
       logo: "https://storage.googleapis.com/iex/api/logos/TSLA.png",
       followerCount: 100000,
       tags: ["Technology", "Electric Vehicles"],
+      analystRatings: {
+        buy: 10,
+        hold: 17,
+        sell: 12,
+      },
     },
     {
       rank: 2,
@@ -48,6 +66,11 @@ export default function StockCardCarousel() {
       logo: "https://storage.googleapis.com/iex/api/logos/MSFT.png",
       followerCount: 100000,
       tags: [],
+      analystRatings: {
+        buy: 25,
+        hold: 5,
+        sell: 2,
+      },
     },
     {
       rank: 3,
@@ -59,6 +82,11 @@ export default function StockCardCarousel() {
       logo: "https://storage.googleapis.com/iex/api/logos/AAPL.png",
       followerCount: 100000,
       tags: [],
+      analystRatings: {
+        buy: 20,
+        hold: 7,
+        sell: 3,
+      },
     },
     {
       rank: 4,
@@ -70,6 +98,11 @@ export default function StockCardCarousel() {
       logo: "https://storage.googleapis.com/iex/api/logos/NVDA.png",
       followerCount: 100000,
       tags: [],
+      analystRatings: {
+        buy: 10,
+        hold: 20,
+        sell: 7,
+      },
     },
     {
       rank: 5,
@@ -81,6 +114,11 @@ export default function StockCardCarousel() {
       logo: "https://storage.googleapis.com/iex/api/logos/NFLX.png",
       followerCount: 100000,
       tags: [],
+      analystRatings: {
+        buy: 5,
+        hold: 10,
+        sell: 17,
+      },
     },
   ];
   const options = {
@@ -123,17 +161,24 @@ export default function StockCardCarousel() {
   );
 }
 
-interface StockCardProps {
-  stock: {
-    rank: number;
-    ticker: string;
-    company: string;
-    price: number;
-    logo: string;
-    dollarChange: number;
-    percentChange: number;
-    followerCount: number;
+interface Stock {
+  rank: number;
+  ticker: string;
+  company: string;
+  price: number;
+  logo: string;
+  dollarChange: number;
+  percentChange: number;
+  followerCount: number;
+  analystRatings: {
+    buy: number;
+    hold: number;
+    sell: number;
   };
+}
+
+interface StockCardProps {
+  stock: Stock;
 }
 
 function StockCard({ stock }: StockCardProps) {
@@ -147,11 +192,11 @@ function StockCard({ stock }: StockCardProps) {
   const getCardBackgroundGradient = (rank: number) => {
     switch (rank) {
       case 1:
-        return "linear(to-r, yellow.400, orange.300)";
+        return "linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)";
       case 2:
-        return "linear(to-r, gray.300, gray.500)";
+        return "linear-gradient(to right, #8f8f8f, #f7f7f7, #919191, #e3e3e3, #878787)";
       case 3:
-        return "linear(to-r, orange.600, orange.700)";
+        return "linear-gradient(to right, #6b2300, #e38d64, #b03b05, #c9805f, #914929)";
       default:
         return "linear(to-r, gray.700, gray.900)";
     }
@@ -246,8 +291,13 @@ function StockCard({ stock }: StockCardProps) {
         </Flex>
         <Box p={6}>
           <Stack spacing={0} align={"center"} mb={5}>
-            <Heading fontSize={"2xl"} fontWeight={700} fontFamily={"body"}>
-              {stock.ticker}
+            <Heading
+              fontSize="2xl"
+              fontWeight={700}
+              fontFamily="body"
+              cursor="pointer"
+            >
+              <Link href={`/stocks/${stock.ticker}`}>{stock.ticker}</Link>
             </Heading>
             <Text color={"gray.500"}>{stock.company}</Text>
           </Stack>
@@ -299,11 +349,8 @@ function StockCard({ stock }: StockCardProps) {
               rounded={"full"}
               bg={"gray.800"}
               color={"white"}
-              //   boxShadow={
-              //     "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-              //   }
               _hover={{
-                bg: "blue.500",
+                bg: "blue.900",
               }}
               _focus={{
                 bg: "blue.500",
@@ -313,14 +360,83 @@ function StockCard({ stock }: StockCardProps) {
             </Button>
           </Stack>
         </Box>
-        {/* <Text>Test</Text> */}
-        <Box w={"100"} bg={"green.400"}>
-          <Box as="span" bg={"green.400"} width="33%" height={"2"} />
-          <Box as="span" bg={"yellow.400"} width="33%" height={"2"} />
-          <Box as="span" bg={"red.400"} width="33%" height={"2"} />
+        <Box>
+          <Popover trigger="hover">
+            <PopoverTrigger>
+              <Box>
+                <BuyHoldSellBar stock={stock} />
+              </Box>
+            </PopoverTrigger>
+            <PopoverContent bg="gray.800" color="white">
+              <PopoverArrow />
+              <PopoverBody>
+                <Text fontSize="xs" mr="2">
+                  Buy Ratings: {stock.analystRatings.buy}
+                </Text>
+                <Text fontSize="xs" mr="2">
+                  Hold Ratings: {stock.analystRatings.hold}
+                </Text>
+                <Text fontSize="xs" mr="2">
+                  Sell Ratings: {stock.analystRatings.sell}
+                </Text>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
         </Box>
       </Box>
     </Center>
+  );
+}
+
+interface BuyHoldSellBarProps {
+  stock: Stock;
+}
+
+function calculateAnalystRatingCssPercentage(
+  stock: Stock,
+  type: "buy" | "hold" | "sell"
+) {
+  const total =
+    stock.analystRatings.buy +
+    stock.analystRatings.hold +
+    stock.analystRatings.sell;
+
+  switch (type) {
+    case "buy":
+      return (stock.analystRatings.hold / total) * 100;
+    case "hold":
+      return (
+        ((stock.analystRatings.buy + stock.analystRatings.hold) / total) * 100
+      );
+  }
+}
+
+function BuyHoldSellBar({ stock }: BuyHoldSellBarProps) {
+  return (
+    <Box
+      className="progress"
+      css={{
+        height: "12px",
+        width: "100%",
+        borderBottomRadius: "10px",
+        cursor: "pointer !important",
+        backgroundImage: `
+         linear-gradient(#00ce7a,#00ce7a),
+         linear-gradient(#ffbd3f,#ffbd3f),
+         linear-gradient(#ff6874,#ff6874);
+        `,
+        backgroundSize: `
+          ${calculateAnalystRatingCssPercentage(stock, "buy")}% 100%,
+          ${calculateAnalystRatingCssPercentage(stock, "hold")}% 100%,
+          100% 100%;
+         `,
+        backgroundRepeat: "no-repeat",
+        transition: "1s",
+        ":hover": {
+          WebkitFilter: "brightness(70%)",
+        },
+      }}
+    />
   );
 }
 

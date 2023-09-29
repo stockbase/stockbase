@@ -90,7 +90,7 @@ export default function Home(): JSX.Element {
         {/* <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top Stocks
         </Text> */}
-        <Divider />
+        <Divider variant={"thick"} />
         <Box>
           {/* <HStack spacing={4} mt={4}>
             <Tag
@@ -141,20 +141,20 @@ export default function Home(): JSX.Element {
         <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top Users
         </Text>
-        <Divider />
+        <Divider variant={"thick"} />
         <UserCardCarousel />
       </Box>
       <Box>
         <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top ETFs
         </Text>
-        <Divider />
+        <Divider variant={"thick"} />
       </Box>
       <Box>
         <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top News
         </Text>
-        <Divider />
+        <Divider variant={"thick"} />
       </Box>
     </>
   );

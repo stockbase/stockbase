@@ -16,6 +16,13 @@ import {
   useBreakpointValue,
   useDisclosure,
   Tag,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   // useColorMode,
   // Input,
   // InputGroup,
@@ -29,6 +36,8 @@ import {
   // PhoneIcon,
   // SearchIcon,
 } from "@chakra-ui/icons";
+import AuthForm from "./auth-form";
+import Image from "next/image";
 // import { BsSun, BsMoonStarsFill } from "react-icons/bs";
 // import Link from "next/link";
 // import { useRouter } from "next/router";
@@ -36,6 +45,7 @@ import {
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
   // const { colorMode, toggleColorMode } = useColorMode();
+  const { isOpen: isAuthModalOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box>
@@ -67,17 +77,25 @@ export default function Navbar() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text
+          <Image
+            src="/Stockbase_Logo.png"
+            alt=""
+            width="0"
+            height="0"
+            sizes="100vw"
+            style={{ width: "175px", height: "auto" }}
+          />
+          {/* <Text
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
             color={useColorModeValue("white", "white")}
           >
             <b>Stockbase</b>
-          </Text>
+          </Text> */}
           <Tag
             size={"sm"}
             bg={useColorModeValue("green.300", "green.800")}
-            ml={2}
+            ml={3}
             color={"white"}
           >
             BETA
@@ -121,6 +139,7 @@ export default function Navbar() {
             _hover={{
               bg: "green.300",
             }}
+            onClick={onOpen}
           >
             Sign In
           </Button>
@@ -135,6 +154,7 @@ export default function Navbar() {
             _hover={{
               bg: "green.300",
             }}
+            onClick={onOpen}
           >
             Sign Up
           </Button>
@@ -144,6 +164,17 @@ export default function Navbar() {
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
       </Collapse>
+      <Modal isOpen={isAuthModalOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Login</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <AuthForm />
+          </ModalBody>
+          <ModalFooter></ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }
