@@ -1,10 +1,22 @@
 import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
+import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 // import { mode } from "@chakra-ui/theme-tools";
 
-const config: ThemeConfig = {
-  initialColorMode: "system",
-  useSystemColorMode: true,
-};
+// const config: ThemeConfig = {
+//   initialColorMode: "system",
+//   useSystemColorMode: true,
+// };
+
+const thick = defineStyle({
+  borderWidth: "2px", // change the width of the border
+  borderStyle: "solid", // change the style of the border
+  borderRadius: 10, // set border radius to 10
+  borderColor: "gray.800",
+});
+
+export const dividerTheme = defineStyleConfig({
+  variants: { thick },
+});
 
 const styles = {
   // TODO: Seems like we need to remove CacheProvider from providers.ts to get this to work,
@@ -29,6 +41,10 @@ const styles = {
 //   },
 // };
 
-const theme = extendTheme({ config, styles });
+const theme = extendTheme({
+  // config,
+  // styles,
+  components: { Divider: dividerTheme },
+});
 
 export default theme;

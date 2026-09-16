@@ -24,7 +24,7 @@ export default function StockTickersBar() {
     parent: {
       float: "right",
       marginRight: "5px",
-      // display: "none" // TODO: Contact TradingView to remove branding
+      display: "none", // TODO: Contact TradingView to remove branding
     },
     // Styles for the link
     link: {
@@ -130,7 +130,7 @@ export default function StockTickersBar() {
         // isTransparent
         displayMode="regular"
         copyrightStyles={tradingViewCopyRightStyles}
-        largeChartUrl={`http://localhost:3002/stocks/redirect`}
+        largeChartUrl={`${process.env.NEXT_PUBLIC_BASE_PATH}/stocks/redirect`}
       />
       <div style={{ clear: "both" }}></div>
     </div>

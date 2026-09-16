@@ -33,12 +33,12 @@ export default function Home(): JSX.Element {
   log("Hey! This is the Stockbase homepage.");
 
   return (
-    <>
+    <Box>
       <Breadcrumb>
         <BreadcrumbItem>
           <BreadcrumbLink href="#">Home</BreadcrumbLink>
         </BreadcrumbItem>
-        <BreadcrumbItem isCurrentPage>
+        <BreadcrumbItem isCurrentPage fontWeight={"bold"}>
           <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
@@ -90,7 +90,7 @@ export default function Home(): JSX.Element {
         {/* <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top Stocks
         </Text> */}
-        <Divider />
+        <Divider variant={"thick"} />
         <Box>
           {/* <HStack spacing={4} mt={4}>
             <Tag
@@ -141,22 +141,22 @@ export default function Home(): JSX.Element {
         <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top Users
         </Text>
-        <Divider />
+        <Divider variant={"thick"} />
         <UserCardCarousel />
       </Box>
       <Box>
         <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top ETFs
         </Text>
-        <Divider />
+        <Divider variant={"thick"} />
       </Box>
-      <Box>
+      {/* <Box>
         <Text fontSize="xl" fontWeight="bold" mb={4} mt={4}>
           Top News
         </Text>
-        <Divider />
-      </Box>
-    </>
+        <Divider variant={"thick"} />
+      </Box> */}
+    </Box>
   );
 }
 
