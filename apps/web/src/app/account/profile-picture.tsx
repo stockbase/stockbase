@@ -1,11 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Database } from "models";
+import { Database } from "../database.types";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
+import { Avatar, AvatarBadge, Button, IconButton } from "@chakra-ui/react";
+import { SmallCloseIcon } from "@chakra-ui/icons";
 type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
-export default function Avatar({
+export default function ProfilePicture({
   uid,
   url,
   size,
@@ -73,14 +75,25 @@ export default function Avatar({
   return (
     <div>
       {avatarUrl ? (
-        <Image
-          width={size}
-          height={size}
-          src={avatarUrl}
-          alt="Avatar"
-          className="avatar image"
-          style={{ height: size, width: size }}
-        />
+        // <Image
+        //   width={size}
+        //   height={size}
+        //   src={avatarUrl}
+        //   alt="Avatar"
+        //   className="avatar image"
+        //   style={{ height: size, width: size }}
+        // />
+        <Avatar size="2xl" src={avatarUrl}>
+          <AvatarBadge
+            as={IconButton}
+            size="sm"
+            rounded="full"
+            top="-10px"
+            colorScheme="red"
+            aria-label="remove Image"
+            icon={<SmallCloseIcon />}
+          />
+        </Avatar>
       ) : (
         <div
           className="avatar no-image"
@@ -88,9 +101,20 @@ export default function Avatar({
         />
       )}
       <div style={{ width: size }}>
-        <label className="button primary block" htmlFor="single">
-          {uploading ? "Uploading ..." : "Upload"}
-        </label>
+        <Button w="full" p={0}>
+          <label
+            className="button primary block"
+            htmlFor="single"
+            style={{
+              width: "100% !important",
+              // height: "100%",
+              cursor: "pointer",
+              alignContent: "center",
+            }}
+          >
+            {uploading ? "Uploading ..." : "Upload"}
+          </label>
+        </Button>
         <input
           style={{
             visibility: "hidden",

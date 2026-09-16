@@ -5,14 +5,21 @@ import Footer from "./footer";
 import Navbar from "./navbar";
 import StockTickersBar from "./stock-tickers-bar";
 // import { ColorModeScript, theme } from "@chakra-ui/react";
-
 import "@splidejs/react-splide/css";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "models";
+import { cookies } from "next/headers";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}): Promise<JSX.Element> {
+  const supabase = createServerComponentClient<Database>({ cookies });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <html lang="en">
       <head>
@@ -21,7 +28,7 @@ export default function RootLayout({
       <body>
         {/* <ColorModeScript initialColorMode={theme.config.initialColorMode} /> */}
         <Providers>
-          <Navbar />
+          <Navbar session={session} />
           <StockTickersBar />
           <main>{children}</main>
           <Footer />

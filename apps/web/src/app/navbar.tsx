@@ -23,6 +23,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Avatar,
+  HStack,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
+  css,
   // useColorMode,
   // Input,
   // InputGroup,
@@ -33,19 +41,125 @@ import {
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  AddIcon,
+  BellIcon,
   // PhoneIcon,
   // SearchIcon,
 } from "@chakra-ui/icons";
 import AuthForm from "./auth-form";
 import Image from "next/image";
+import Link from "next/link";
+import {
+  Session,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
+import { useCallback, useEffect, useState } from "react";
+import { Database } from "models";
+import { FaBell } from "react-icons/fa";
+import LoginForm from "./login-form";
+import { FiBell } from "react-icons/fi";
 // import { BsSun, BsMoonStarsFill } from "react-icons/bs";
 // import Link from "next/link";
 // import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+const Links = ["Dashboard", "Projects", "Team"];
+interface Props {
+  children: React.ReactNode;
+}
+const NavLink = (props: Props) => {
+  const { children } = props;
+  return (
+    <Box
+      as="a"
+      px={2}
+      py={1}
+      rounded={"md"}
+      _hover={{
+        textDecoration: "none",
+        bg: useColorModeValue("gray.200", "gray.700"),
+      }}
+      href={"#"}
+    >
+      {children}
+    </Box>
+  );
+};
+
+type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
+
+export default function Navbar({ session }: { session: Session | null }) {
   const { isOpen, onToggle } = useDisclosure();
   // const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen: isAuthModalOpen, onOpen, onClose } = useDisclosure();
+
+  // TODO: Move this into a AuthContext
+  const supabase = createClientComponentClient<Database>();
+  const [loading, setLoading] = useState(true);
+  // const [fullname, setFullname] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
+  // const [website, setWebsite] = useState<string | null>(null);
+  const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const user = session?.user;
+
+  const [profilePic, setProfilePic] =
+    useState<Profiles["avatar_url"]>(avatar_url);
+
+  useEffect(() => {
+    async function downloadImage(path: string) {
+      try {
+        const { data, error } = await supabase.storage
+          .from("avatars")
+          .download(path);
+        if (error) {
+          throw error;
+        }
+
+        const url = URL.createObjectURL(data);
+        setProfilePic(url);
+      } catch (error) {
+        console.log("Error downloading image: ", error);
+      }
+    }
+
+    if (avatar_url) downloadImage(avatar_url);
+  }, [avatar_url, supabase]);
+
+  const getProfile = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      if (user) {
+        console.log("LOGGED_IN");
+        let { data, error, status } = await supabase
+          .from("profiles")
+          .select(`username, avatar_url`)
+          .eq("id", user?.id)
+          .single();
+
+        if (error && status !== 406) {
+          throw error;
+        }
+
+        if (data) {
+          // setFullname(data.full_name);
+          setUsername(data.username);
+          // setWebsite(data.website);
+          console.log(data.avatar_url);
+          setAvatarUrl(data.avatar_url);
+        }
+      }
+    } catch (error) {
+      alert("Error loading user data!");
+    } finally {
+      setLoading(false);
+    }
+  }, [user, supabase]);
+
+  useEffect(() => {
+    getProfile();
+  }, [user, getProfile]);
 
   return (
     <Box>
@@ -78,12 +192,12 @@ export default function Navbar() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
           <Image
-            src="/Stockbase_Logo.png"
+            src="/Stockbase-Logo.png"
             alt=""
             width="0"
             height="0"
             sizes="100vw"
-            style={{ width: "175px", height: "auto" }}
+            style={{ width: "auto", height: "20px" }}
           />
           {/* <Text
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
@@ -106,19 +220,20 @@ export default function Navbar() {
           </Flex>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={3}
-        >
-          {/* <InputGroup display={{ base: "none", md: "inline-flex" }}>
+        {!session ? (
+          <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={"flex-end"}
+            direction={"row"}
+            spacing={3}
+          >
+            {/* <InputGroup display={{ base: "none", md: "inline-flex" }}>
             <InputRightElement pointerEvents="none">
               <SearchIcon color="gray.300" />
             </InputRightElement>
             <Input placeholder="Search" />
           </InputGroup> */}
-          {/* <Button
+            {/* <Button
             aria-label="Toggle Color Mode"
             onClick={toggleColorMode}
             _focus={{ boxShadow: "none" }}
@@ -128,37 +243,115 @@ export default function Navbar() {
           >
             {colorMode === "light" ? <BsSun /> : <BsMoonStarsFill />}
           </Button> */}
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"blue.400"}
-            href={"#"}
-            _hover={{
-              bg: "green.300",
-            }}
-            onClick={onOpen}
-          >
-            Sign In
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"green.400"}
-            href={"#"}
-            _hover={{
-              bg: "green.300",
-            }}
-            onClick={onOpen}
-          >
-            Sign Up
-          </Button>
-        </Stack>
+            {/* <Link href="/signin"> */}
+            <Button
+              display={{ base: "none", md: "inline-flex" }}
+              fontSize={"sm"}
+              fontWeight={600}
+              color={"white"}
+              bg={"blue.400"}
+              _hover={{
+                bg: "green.300",
+              }}
+              onClick={onOpen}
+            >
+              Sign In
+            </Button>
+            {/* </Link> */}
+            <Link href="/signup">
+              <Button
+                display={{ base: "none", md: "inline-flex" }}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"green.400"}
+                _hover={{
+                  bg: "green.300",
+                }}
+              >
+                Sign Up
+              </Button>
+            </Link>
+          </Stack>
+        ) : (
+          <>
+            <Box color={useColorModeValue("gray.800", "gray.800")}>
+              <Flex alignItems={"center"} justifyContent={"space-between"}>
+                <Box mr="4">
+                  {/* <FiBell color="white" /> */}
+                  <IconButton
+                    css={css`
+                      position: relative !important;
+                    `}
+                    py={"2"}
+                    // colorScheme={"whiteAlpha"}
+                    bg={"transparent"}
+                    aria-label={"Notifications"}
+                    // size={"lg"}
+                    icon={
+                      <>
+                        <FaBell color="white" />
+                        <Box
+                          as={"span"}
+                          color={"white"}
+                          position={"absolute"}
+                          top={"6px"}
+                          right={"4px"}
+                          fontSize={"0.8rem"}
+                          bgColor={"red"}
+                          borderRadius={"lg"}
+                          zIndex={9999}
+                          p={"1px"}
+                        >
+                          {2}
+                        </Box>
+                      </>
+                    }
+                  />
+                </Box>
+                <Flex alignItems={"center"}>
+                  {/* <BellIcon size={"sm"} mr={4} /> */}
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      rounded={"full"}
+                      variant={"link"}
+                      cursor={"pointer"}
+                      minW={0}
+                    >
+                      <Avatar size={"sm"} src={profilePic || ""} bg={"white"} />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem>Profile</MenuItem>
+                      <MenuItem>Settings</MenuItem>
+                      <MenuDivider />
+                      <MenuItem>
+                        {/* <Link href={"/auth/signout"}>Logout</Link> */}
+                        {/* <form action="/auth/signout" method="post">
+                          <button className="button block" type="submit">
+                            Sign out
+                          </button>
+                        </form> */}
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Flex>
+              </Flex>
+
+              {isOpen ? (
+                <Box pb={4} display={{ md: "none" }}>
+                  <Stack as={"nav"} spacing={4}>
+                    {Links.map((link) => (
+                      <NavLink key={link}>{link}</NavLink>
+                    ))}
+                  </Stack>
+                </Box>
+              ) : null}
+            </Box>
+
+            {/* <Box p={4}>Main Content Here</Box> */}
+          </>
+        )}
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -170,7 +363,7 @@ export default function Navbar() {
           <ModalHeader>Login</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <AuthForm />
+            <LoginForm onLoginSuccess={onClose} onRedirect={onClose} />
           </ModalBody>
           <ModalFooter></ModalFooter>
         </ModalContent>
@@ -181,57 +374,60 @@ export default function Navbar() {
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue("white", "gray.200");
-  const linkHoverColor = useColorModeValue("white", "white");
+  const linkHoverColor = useColorModeValue("gray.200", "white");
   const popoverContentBgColor = useColorModeValue("gray.800", "gray.800");
   // const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <Stack direction={"row"} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <Box
-                as="a"
-                p={2}
-                href={navItem.href ?? "#"}
-                cursor={"pointer"}
-                fontSize={"sm"}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                }}
-              >
-                {/* <Link href={navItem.href ?? "#"}> */}
-                {/* {navItem.label} */}
-                {/* <a className={router.pathname == "/" ? "active" : ""}> */}
-                {navItem.label}
-                {/* </a> */}
-                {/* </Link> */}
-              </Box>
-            </PopoverTrigger>
+      {NAV_ITEMS.map((navItem) => {
+        const isActive = navItem.href
+          ? pathname === navItem.href && !navItem.children
+          : false;
+        return (
+          <Box key={navItem.label}>
+            <Popover trigger={"hover"} placement={"bottom-start"}>
+              <PopoverTrigger>
+                <Box
+                  cursor={"pointer"}
+                  fontSize={"sm"}
+                  fontWeight={isActive ? "extrabold" : 500}
+                  color={linkColor}
+                  textDecoration={isActive ? "underline" : "none"}
+                  textDecorationColor={"green.400"}
+                  textUnderlineOffset={8}
+                  _hover={{
+                    textDecoration: isActive ? "underline" : "none",
+                    textDecorationColor: "green.400",
+                    textUnderlineOffset: 8,
+                    color: linkHoverColor,
+                  }}
+                >
+                  <Link href={navItem.href ?? "#"}>{navItem.label}</Link>
+                </Box>
+              </PopoverTrigger>
 
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))}
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={"xl"}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={"xl"}
+                  minW={"sm"}
+                >
+                  <Stack>
+                    {navItem.children.map((child) => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        );
+      })}
     </Stack>
   );
 };
@@ -355,39 +551,47 @@ const NAV_ITEMS: NavItem[] = [
     href: "/",
   },
   {
-    label: "Explore",
-    href: "/",
-    children: [
-      {
-        label: "Social",
-        subLabel: "Network with other investors & traders",
-        href: "/users",
-      },
-      {
-        label: "Stocks",
-        subLabel: "Research & analyze stocks",
-        href: "/stocks",
-      },
-      {
-        label: "ETFS",
-        subLabel: "Find your dream design job",
-        href: "/etfs",
-      },
-      {
-        label: "Market Data",
-        subLabel: "An exclusive list for contract work",
-        href: "/",
-      },
-    ],
-  },
-  {
     label: "About",
     href: "/about",
   },
   {
-    label: "Contact",
-    href: "#",
+    label: "Stocks",
+    href: "/stocks",
   },
+  {
+    label: "ETFs",
+    href: "/etfs",
+  },
+  {
+    label: "Users",
+    href: "/users",
+  },
+  // {
+  //   label: "Explore",
+  //   href: "/",
+  //   children: [
+  //     {
+  //       label: "Social",
+  //       subLabel: "Network with other investors & traders",
+  //       href: "/users",
+  //     },
+  //     {
+  //       label: "Stocks",
+  //       subLabel: "Research & analyze stocks",
+  //       href: "/stocks",
+  //     },
+  //     {
+  //       label: "ETFS",
+  //       subLabel: "Find your dream design job",
+  //       href: "/etfs",
+  //     },
+  //     {
+  //       label: "Market Data",
+  //       subLabel: "An exclusive list for contract work",
+  //       href: "/",
+  //     },
+  //   ],
+  // },
   {
     label: "Help",
     href: "#",

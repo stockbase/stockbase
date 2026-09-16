@@ -1,8 +1,12 @@
 "use client";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import {
+  Session,
+  createClientComponentClient,
+} from "@supabase/auth-helpers-nextjs";
 import { Database } from "models";
+import { useEffect, useState } from "react";
 
 export default function AuthForm() {
   const supabase = createClientComponentClient<Database>();
@@ -27,8 +31,8 @@ export default function AuthForm() {
       // showLinks
       socialLayout="vertical"
       providers={["google", "facebook", "twitter"]}
-      // TODO: this needs to be dynamic
-      redirectTo="http://localhost:3002/auth/callback"
+      redirectTo={`${process.env.NEXT_PUBLIC_BASE_PATH}/auth/callback`}
+      // redirectTo={`http://localhost:3002/auth/callback`}
     />
   );
 }

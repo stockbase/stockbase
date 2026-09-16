@@ -124,24 +124,50 @@ run the following command from the root directory:
 npx supabase migration new <YOUR_FILE_NAME>
 ```
 
-This will generate an empty `supabase/migrations/<timestamp>_<YOUR_FILE_NAME>.sql.` Add some SQL to it,
-and then run the following to apply the migration to your local Postgres database:
+This will generate an empty `supabase/migrations/<timestamp>_<YOUR_FILE_NAME>.sql.` Add some SQL to update the database schema. Keep in mind that you can access a lot of helpful templates and quick starts from the Supabase dashboard. If you find a template, do not apply it directly from the Supabase dashboard. Rather, copy the SQL from the template into your generated migration, so you can test it locally first.
+
+Once your migration file is updated, run the following to apply the migration to your local Postgres database:
 
 ```
 npx supabase db reset
 ```
 
-### Generating Types
+After testing your local database updates, you must apply the changes to production:
 
-If you make a database update in Supabase, you need to update the TypeScript models to reflect your changes:
+```
+supabase link --project-ref <project-id>
+# You can get <project-id> from your project's dashboard URL: https://supabase.com/dashboard/project/<project-id>
+
+supabase db pull
+# Capture any changes that you have made to your remote database before you went through the steps above
+# If you have not made any changes to the remote database, skip this step
+
+# Deploy any local database migrations using
+supabase db push
+```
+
+### Generating Models/Types from Database
+
+If you make a database update in your local Supabase, you need to update the TypeScript models to reflect your changes:
 
 [Generating Types Instructions](https://supabase.com/docs/guides/api/rest/generating-types)
 
 ```
 # From root directory
-npx supabase login
-npx supabase gen types typescript --project-id <PROJECT_ID> --schema public > packages/models/src/supabase.ts
+npx supabase gen types typescript --local --schema public > packages/models/src/supabase.ts
 ```
+
+This command will automatically generate the TypeScript models based on your database schema, and put them into a shared package that all the apps in this monorepo can use.
+
+<!-- ### Developing Edge Functions Locally
+
+https://supabase.com/docs/guides/functions/local-development
+
+After testing locally.
+
+```
+supabase functions deploy <function_name>
+``` -->
 
 ## What's inside?
 

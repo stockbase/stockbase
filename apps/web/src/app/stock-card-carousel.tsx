@@ -120,6 +120,22 @@ export default function StockCardCarousel() {
         sell: 17,
       },
     },
+    {
+      rank: 6,
+      ticker: "HUBS",
+      company: "Hubspot",
+      price: 465.94,
+      dollarChange: -29.46,
+      percentChange: -5.95,
+      logo: "https://storage.googleapis.com/iex/api/logos/HUBS.png",
+      followerCount: 100000,
+      tags: [],
+      analystRatings: {
+        buy: 5,
+        hold: 10,
+        sell: 17,
+      },
+    },
   ];
   const options = {
     // rewind: true,
@@ -142,21 +158,11 @@ export default function StockCardCarousel() {
   };
   return (
     <Splide options={options}>
-      <SplideSlide>
-        <StockCard stock={defaultStocks[0]} />
-      </SplideSlide>
-      <SplideSlide>
-        <StockCard stock={defaultStocks[1]} />
-      </SplideSlide>
-      <SplideSlide>
-        <StockCard stock={defaultStocks[2]} />
-      </SplideSlide>
-      <SplideSlide>
-        <StockCard stock={defaultStocks[3]} />
-      </SplideSlide>
-      <SplideSlide>
-        <StockCard stock={defaultStocks[4]} />
-      </SplideSlide>
+      {defaultStocks.map((stock) => (
+        <SplideSlide key={stock.ticker}>
+          <StockCard stock={stock} />
+        </SplideSlide>
+      ))}
     </Splide>
   );
 }
@@ -257,7 +263,7 @@ function StockCard({ stock }: StockCardProps) {
             </Stat>
             <Box position={"absolute"} mt={7}>
               <StockDailyPriceChart
-                color={stock.dollarChange > 0 ? "#32a852" : "#db3030"}
+                color={stock.dollarChange > 0 ? "#68D391" : "#ff6874"}
                 data={fakeDataPoints}
               />
             </Box>

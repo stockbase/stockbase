@@ -14,11 +14,16 @@ body {
 }
 
 main {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; */
   /* align-items: center; */
-  padding: 6rem;
+  /* padding: 2rem; */
+  /* padding: 1em 6em 1em; */
+  /* TODO: for smaller displays view, less padding */
+  padding-top: 1.5em;
+  padding-left: 12em;
+  padding-right: 12em;
   min-height: 100vh;
 }
 
